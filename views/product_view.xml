@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flectra>
+    <data>
+    
+        <!-- <record id="product_template_id_inherit_calculate_price" model="ir.ui.view">
+            <field name="name">product.template.view.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='options']" position="inside">
+                    <div>
+                        <field name="is_configurable" />
+                        <label for="is_configurable" />
+                    </div>
+                </xpath>
+                <page name="inventory" position="after">
+                    <page name="measures_info" string="Medidas" attrs="{'invisible': [('is_configurable', '=', False)]}">
+                        <group>
+                            <group>
+                                <field name="configurations" attrs="{'required': [('is_configurable', '=', True)]}" />
+                            </group>
+                        </group>
+                        <group attrs="{'invisible': [('configurations', 'in', ['is_lona','',False])]}">
+                            <group>
+                                <field name="width" attrs="{'required': [('configurations', '=', 'is_vinil')]}" />
+                                <field name="min_width" attrs="{'required': [('configurations', '=', 'is_vinil')]}" />
+                            </group>
+                            <group>
+                                <field name="height" attrs="{'required': [('configurations', '=', 'is_vinil')]}" />
+                                <field name="min_height" attrs="{'required': [('configurations', '=', 'is_vinil')]}" />
+                            </group>
+                        </group>
+                        <separator string="Medidas"/>
+                        <field name="tabular_id" mode="tree">
+                            <tree editable="bottom">
+                                <field name="product_id" optional="hide"/>
+                                <field name="width" />
+                                <field name="height" />
+                                <field name="currency_id" optional="hide" readonly="1" />
+                                <field name="price" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                            </tree>
+                        </field>
+                    </page>
+                </page>
+            </field>
+        </record> -->
+
+        <record id="product_template_id_inherit_calculate_price" model="ir.ui.view">
+            <field name="name">product.template.view.form.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='options']" position="inside">
+                    <div>
+                        <field name="is_configurable" />
+                        <label for="is_configurable" />
+                    </div>
+                </xpath>
+                <page name="inventory" position="after">
+                    <page name="measures_info" string="Medidas" attrs="{'invisible': [('is_configurable', '=', False)]}">
+                        <group>
+                            <group>
+                                <field name="configurations" attrs="{'required': [('is_configurable', '=', True)]}" />
+                            </group>
+                        </group>
+                        <group attrs="{'invisible': [('configurations', 'in', ['is_lona','',False])]}">
+                            <group>
+                                <field name="width" attrs="{'required': [('configurations', '=', 'is_vinil')]}" />
+                                <field name="min_width" attrs="{'required': [('configurations', '=', 'is_vinil')]}" />
+                            </group>
+                            <group>
+                                <field name="height" attrs="{'required': [('configurations', '=', 'is_vinil')]}" />
+                                <field name="min_height" attrs="{'required': [('configurations', '=', 'is_vinil')]}" />
+                            </group>
+                        </group>
+                        <group attrs="{'invisible': [('configurations', 'in', ['is_vinil','',False])]}">
+                            <group>
+                                <field name="width" attrs="{'required': [('configurations', '=', 'is_lona')]}" />
+                            </group>
+                            <group>
+                                <field name="min_width" attrs="{'required': [('configurations', '=', 'is_lona')]}" />
+                                <field name="min_height" attrs="{'required': [('configurations', '=', 'is_lona')]}" />
+                            </group>
+                        </group>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+    </data>
+</flectra>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flectra>
+    <data>
+
+        <template id="assets_frontend" inherit_id="web.assets_frontend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/calculate_price/static/src/js/calculate_price.js"/>
+            </xpath>
+        </template>
+
+        <template id="product_price" inherit_id="website_sale.product_price">
+            <xpath expr="//h4[hasclass('oe_price_h4')]" position="replace">
+                <t t-if="combination_info['is_variant_configurable']">
+                    <!-- <h4 class="oe_price_h4 css_editable_mode_hidden" style="display: none;">
+                        <span t-attf-class="text-danger oe_default_price {{'' if combination_info['has_discounted_price'] else 'd-none'}}" style="text-decoration: line-through; white-space: nowrap;" t-esc="combination_info['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
+                        <b class="oe_price" style="white-space: nowrap;" t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                        <span itemprop="price" style="display:none;" t-esc="combination_info['price']"/>
+                        <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
+                    </h4> -->
+    
+                    <h4 class="oe_price_h4 css_editable_mode_hidden">
+                        <span t-attf-class="text-danger oe_default_price {{'' if combination_info['has_discounted_price'] else 'd-none'}}" style="text-decoration: line-through; white-space: nowrap;" t-esc="combination_info['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
+                        <b class="oe_price" style="white-space: nowrap;display: none;" t-esc="combination_info['configurable_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                        <span class="actual_price_cp" style="" t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
+                        <span itemprop="price" style="display:none;" t-esc="combination_info['price']" />
+                        <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
+                    </h4>
+                </t>
+                <t t-else="">
+                    <h4 class="oe_price_h4 css_editable_mode_hidden">
+                        <span t-attf-class="text-danger oe_default_price {{'' if combination_info['has_discounted_price'] else 'd-none'}}" style="text-decoration: line-through; white-space: nowrap;" t-esc="combination_info['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
+                        <b class="oe_price" style="white-space: nowrap;" t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                        <span itemprop="price" style="display:none;" t-esc="combination_info['price']"/>
+                        <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
+                    </h4>
+                </t>
+            </xpath>
+        </template>
+    
+        <template id="product_quantity" inherit_id="website_sale.product_quantity">
+            <xpath expr="//div[hasclass('css_quantity','input-group')]" position="before">
+                <div class="reload_measures" id="reload_measures" t-if="product_variant.is_configurable" t-attr-configs="product_variant.configurations">
+                    <label for="name">MEDIDAS</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend mr-2">
+                            <span class="input-group-text" id="basic-addon1">W</span>
+                            <input type="number" t-att-min="product_variant.min_width" t-att-value="product_variant.min_width" class="form-control" id="width_c" t-att-last_measure="product_variant.min_width" placeholder="Ancho (CM)"/>
+                        </div>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">H</span>
+                            <input type="number" t-att-min="product_variant.min_height" t-att-value="product_variant.min_height" class="form-control" id="height_c" t-att-last_measure="product_variant.min_height" placeholder="Alto (CM)" />
+                        </div>
+                    </div>
+                    <span id="alert_min" style="color: red;font-size: 12px;font-weight: bold;"></span>
+                </div>
+            </xpath>
+        </template>
+
+        <template id="cart_lines_measure" inherit_id="website_sale.cart_lines">
+            <xpath expr="//thead/tr/th[hasclass('td-qty')]" position="after">
+                <!-- <th class="text-center">Ancho</th> -->
+                <t t-foreach="website_sale_order.website_order_line" t-as="line">
+                    <th class="text-center" t-if="line.product_id.is_configurable">Ancho</th>
+                    <th class="text-center" t-if="line.product_id.is_configurable">Largo</th>
+                </t>
+                
+            </xpath>
+
+            <xpath expr="//td[hasclass('text-center','td-qty')]" position="after">
+                <t t-foreach="website_sale_order.website_order_line" t-as="line">
+                    <td t-if="line.product_id.is_configurable"><span t-field="line.width_measure"/></td>
+                    <td t-if="line.product_id.is_configurable"><span t-field="line.height_measure"/></td>
+                </t>
+            </xpath>
+        </template>
+    
+    </data>
+</flectra>

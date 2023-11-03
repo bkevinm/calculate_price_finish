@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flectra>
+    <data>
+    
+        <template id="report_sale_with_measures" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//th[@name='th_quantity']" position="after">
+                <th name='th_width_measure'  class="text-left">Ancho (CM)</th>
+                <th name='th_height_measure' class="text-left">Largo (CM)</th>
+            </xpath>
+
+            <xpath expr="//td[@name='td_quantity']" position="after">
+                <td name='th_width_measure'>
+                    <span t-field="line.width_measure" ></span>
+                </td>
+                <td name='th_height_measure'>
+                    <span t-field="line.height_measure" ></span>
+                </td>
+            </xpath>
+
+        </template>
+
+        
+
+    </data>
+</flectra>
