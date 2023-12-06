@@ -156,6 +156,13 @@ class SaleOrderCalculate(models.Model):
                             bom_line.write({'product_uom_qty': (bom_line.product_uom_qty * line.cubes_quantity)})
         return res
 
+    def is_configurable(self):
+        res =  self.order_line.filtered(lambda x: x.product_id.is_configurable)
+        if res:
+            return True
+        return False
+     
+
 class SaleLinesCalculate(models.Model):
     _inherit = 'sale.order.line'
 

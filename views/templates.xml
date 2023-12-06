@@ -56,23 +56,55 @@
             </xpath>
         </template>
 
-        <template id="cart_lines_measure" inherit_id="website_sale.cart_lines">
+        <!-- t-if="line.product_id.is_configurable" -->
+
+        <!-- <template id="cart_lines_measure" inherit_id="website_sale.cart_lines">
             <xpath expr="//thead/tr/th[hasclass('td-qty')]" position="after">
-                <!-- <th class="text-center">Ancho</th> -->
+                     <th class="text-center">Ancho</th>
                 <t t-foreach="website_sale_order.website_order_line" t-as="line">
-                    <th class="text-center" t-if="line.product_id.is_configurable">Ancho</th>
-                    <th class="text-center" t-if="line.product_id.is_configurable">Largo</th>
+                    <th class="text-center">Ancho</th>
+                    <th class="text-center">Largo</th>
                 </t>
                 
-            </xpath>
+            </xpath> -->
 
-            <xpath expr="//td[hasclass('text-center','td-qty')]" position="after">
+            <!-- <xpath expr="//td[hasclass('text-center','td-qty')]" position="after">
                 <t t-foreach="website_sale_order.website_order_line" t-as="line">
-                    <td t-if="line.product_id.is_configurable"><span t-field="line.width_measure"/></td>
-                    <td t-if="line.product_id.is_configurable"><span t-field="line.height_measure"/></td>
+                    <td class="text-center"><span t-field="product_variant.width_measure"/></td>
+                    <td class="text-center" ><span t-field="product_variant .height_measure"/></td>
                 </t>
             </xpath>
+        </template> -->
+ 
+        <!-- <template id="cart_lines_measure" inherit_id="website_sale.cart_lines">
+            <xpath expr="//thead/tr/th[hasclass('td-qty')]" position="after">
+                <th class="text-center" t-if="website_sale_order.is_configurable()">Ancho</th>
+                <th class="text-center" t-if="website_sale_order.is_configurable()">Largo</th>    
+            </xpath> -->
+
+        <template id="cart_lines_measure" inherit_id="website_sale.cart_lines">
+            <xpath expr="//thead/tr/th[hasclass('td-qty')]" position="after">
+                <t t-if="website_sale_order.is_configurable()">
+                    <th class="text-center">Ancho</th>
+                    <th class="text-center">Largo</th>
+                </t>
+                <t t-else="not website_sale_order.is_configurable()">
+                    <th></th>
+                    <th></th>
+                </t>
+            </xpath>
+            
+        <xpath expr="//td[hasclass('text-center','td-qty')]" position="after">
+            <t t-if="line.product_id.is_configurable">
+                <td class="text-center"><span t-field="line.width_measure"/></td>
+                <td class="text-center"><span t-field="line.height_measure"/></td>
+            </t>
+            <t t-else="not line.product_id.is_configurable">
+                <td></td>
+                <td></td>
+            </t>
+        </xpath>
         </template>
-    
+
     </data>
 </flectra>
